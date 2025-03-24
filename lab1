@@ -1,4 +1,7 @@
 import random
+import time
+from tabulate import tabulate
+
 def gcd(a, b):
     while b:
         a, b = b, a % b
@@ -76,3 +79,117 @@ def fraction(n):
         if a == 2 * a0:
             break
     return fractions
+
+"""
+def main():
+    number = int(input("Введіть число для перевірки на простоту та можливість поділу: "))
+
+    if solovey_strassen(number,101):
+        print(f"Число {number} є простим.")
+    else:
+        print(f"Число {number} не є простим.")
+
+
+    divisor = int(input("Введіть дільник для перевірки: "))
+
+    if solovey_strassen(divisor,101):
+        print(f"Число {divisor} є простим.")
+    else:
+        print(f"Число {divisor} не є простим.")
+
+    if trial_div(number, divisor):
+        print(f"Число {number} ділиться на {divisor}.")
+    else:
+        print(f"Число {number} не ділиться на {divisor}.")
+
+
+    divisor_found = pollard_rho(number,f)
+
+    if divisor_found:
+        print(f"Дільник числа {number}, знайдений методом Полларда: {divisor_found}")
+        new_number = number // divisor_found
+        print(f"Тепер працюємо з числом {new_number}.")
+    else:
+        print("Дільник не знайдений методом Полларда.")
+
+if __name__ == "__main__":
+    main()
+"""
+
+def time_pollard_rho(n):
+    results = []
+
+    for n in n:
+        start_time = time.time()
+
+        d = pollard_rho(n,f)
+
+        end_time = time.time()
+        time_rho = end_time - start_time
+
+        results.append((n, d, time_rho))
+
+    return results
+
+def display_rho(results):
+    table = []
+
+    for n, d, time_rho in results:
+        if d:
+            table.append([n, d, f"{time_rho:.8f} секунд"])
+        else:
+            table.append([n, "Не знайдений", f"{time_rho:.8f} секунд"])
+
+    headers = ["Число", "Дільник", "р-метод Поллард" ]
+    print(tabulate(table, headers=headers, tablefmt="simple"))
+
+
+numbers = [
+    3009182572376191, 1021514194991569, 4000852962116741, 15196946347083,
+    499664789704823, 269322119833303, 679321846483919, 96267366284849,
+    61333127792637, 2485021628404193
+]
+
+results = time_pollard_rho(numbers)
+
+display_rho(results)
+
+"""
+def time_bm(n):
+    results = []
+
+    for n in n:
+        start_time = time.time()
+
+        d = тут треба вставити функцію для БМ
+
+        end_time = time.time()
+        time_bm = end_time - start_time
+
+        results.append((n, d, time_bm))
+
+    return results
+
+def display_bm(results):
+    table = []
+
+    for n, d, time_bm in results:
+        if d:
+            table.append([n, d, f"{time_bm :.8f} секунд"])
+        else:
+            table.append([n, "Не знайдений", f"{time_bm :.8f} секунд"])
+
+    headers = ["Число", "Дільник", "Брілхарта-Морісона" ]
+    print(tabulate(table, headers=headers, tablefmt="simple"))
+
+
+numbers = [
+    3009182572376191, 1021514194991569, 4000852962116741, 15196946347083,
+    499664789704823, 269322119833303, 679321846483919, 96267366284849,
+    61333127792637, 2485021628404193
+]
+
+results = time_bm (numbers)
+
+display_bm (results)
+"""
