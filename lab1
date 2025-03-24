@@ -1,0 +1,78 @@
+import random
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def pseudo(a, p):
+    if gcd(a, p) != 1:
+        return False
+    return pow(a, p - 1, p) == 1
+
+def solovey_strassen(p, k):
+    if p < 2:
+        return False
+    if p % 2 == 0:
+        return False
+    if p == 2:
+        return True
+
+    counter = 0
+    for i in range(k):
+        x = random.randint(2, p - 1)
+        if gcd(x, p) > 1:
+            return False
+        if not pseudo(x, p):
+            return False
+        counter += 1
+    return True
+
+"""
+def trial_div(n):
+    limit = int(math.sqrt(n))
+    d = []
+
+    for i in range(2, limit):
+        while n % i == 0:
+            d.append(i)
+            n //= i
+    if n > 1:
+        d.append(n)
+    return d
+"""
+
+def trial_div(n, divisor):
+    return n % divisor == 0
+
+def f(x, n):
+    return (x ** 2 + 1) % n
+
+def pollard_rho(n, f):
+    if n % 2 == 0:
+        return 2
+
+    x, y, d = 2, 2, 1
+    while d == 1:
+        x = f(x, n)
+        y = f(f(y, n), n)
+        d = gcd(abs(x - y), n)
+    return d if d != n and d != 1 else None
+
+def fraction(n):
+    a0 = int(math.sqrt(n))
+    if a0 * a0 == n:
+        return [a0]
+
+    fractions = [a0]
+    u, v = a0, 1
+
+    while True:
+        v = (n - u**2) // v
+        a = (a0 + u) // v
+        u = a * v - u
+
+        fractions.append(a)
+
+        if a == 2 * a0:
+            break
+    return fractions
